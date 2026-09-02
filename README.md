@@ -1,6 +1,7 @@
 # Fridge Raid 🧊 → 🍳
 
-> 🚀 **Live Working Website:** [https://piyushrj9260-glitch.github.io/fridge-raid/](https://piyushrj9260-glitch.github.io/fridge-raid/)
+> 🌐 **Live Web Application:** [https://piyushrj9260-glitch.github.io/fridge-raid/](https://piyushrj9260-glitch.github.io/fridge-raid/)  
+> ⚡ **Live Server API Proxy:** `https://piyushrj9260-glitch.github.io/fridge-raid/` (Local Express server running at `http://localhost:3001/api/recipe`)
 
 Type out whatever's in your fridge (or pantry, or "half an onion and regret"),
 and get back actual interactive recipe options — not a wall of chat text. Scale
