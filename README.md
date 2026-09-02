@@ -1,8 +1,5 @@
 # Fridge Raid 🧊 → 🍳
 
-> 🌐 **Live Web Application:** [https://piyushrj9260-glitch.github.io/fridge-raid/](https://piyushrj9260-glitch.github.io/fridge-raid/)  
-> ⚡ **Live Server API Proxy:** `https://piyushrj9260-glitch.github.io/fridge-raid/` (Local Express server running at `http://localhost:3001/api/recipe`)
-
 Type out whatever's in your fridge (or pantry, or "half an onion and regret"),
 and get back actual interactive recipe options — not a wall of chat text. Scale
 servings live, swap ingredients you don't have, check off steps as you cook, and
@@ -60,7 +57,7 @@ fridge-to-recipe/
 
 ## Setup & Running
 
-You need a free Gemini API key: https://aistudio.google.com/app/apikey
+You need a free Gemini API key from AI Studio.
 
 ```bash
 # 1. Backend
