@@ -1,5 +1,7 @@
 # Fridge Raid 🧊 → 🍳
 
+> 🚀 **Live Working Website:** [https://piyushrj9260-glitch.github.io/fridge-raid/](https://piyushrj9260-glitch.github.io/fridge-raid/)
+
 Type out whatever's in your fridge (or pantry, or "half an onion and regret"),
 and get back actual interactive recipe options — not a wall of chat text. Scale
 servings live, swap ingredients you don't have, check off steps as you cook, and
