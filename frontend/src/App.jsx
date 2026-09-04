@@ -190,9 +190,7 @@ export default function App() {
           <>
             <RecipeCard
               recipe={displayedRecipe}
-              recipes={recipes}
-              activeOptionIndex={activeOptionIndex}
-              onSelectOptionIndex={selectOptionIndex}
+              onTryDifferent={handleRetry}
               displayServings={displayServings}
               onServingsChange={setDisplayServings}
               onSwapIngredient={swapIngredient}

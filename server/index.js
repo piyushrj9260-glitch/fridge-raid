@@ -12,32 +12,23 @@ app.use(express.json({ limit: "100kb" }));
 const PORT = process.env.PORT || 3001;
 const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.0-flash";
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const REQUEST_TIMEOUT_MS = 25000;
+const REQUEST_TIMEOUT_MS = 60000;
 const MAX_ATTEMPTS = 3;
 
 const SYSTEM_PROMPT = `You are a creative recipe generator for a "fridge raid" cooking app, specializing primarily in INDIAN CUISINE (Sabzis, Curries, Biryani/Pulao, Parathas, Bhurji, Tadka, Kadhai dishes, Chaats, etc.).
-Given a free-form list of ingredients provided by the user, invent 2 to 3 DISTINCT Indian-inspired recipe options, focusing on DIFFERENT SUBSETS or COMBINATIONS of the ingredients present in their fridge/pantry.
-
-For example:
-- If the user lists "potatoes, tomatoes, onion, cheese/paneer, garlic":
-  - Option 1: Aloo Tamatar Ki Sabzi (Spiced Potato & Tomato Dry Curry)
-  - Option 2: Paneer Potato Masala Gravy (Rich Garlic & Onion Gravy)
-  - Option 3: Cheesy Aloo Paratha Filling / Tawa Roast
-- If the user lists "chicken, rice, onion, garlic, spices":
-  - Option 1: Quick Chicken Tawa Pulao / Dum Biryani Style
-  - Option 2: Kadhai Chicken Gravy Masala
-  - Option 3: Indian Chicken Sukka Fry
+Given a free-form list of ingredients provided by the user, invent exactly 1 creative Indian-inspired recipe using the ingredients present in their fridge/pantry.
 
 Rules:
 - Primary cuisine focus: Authentic or modern Indian home-style cooking (unless user explicitly requests a non-Indian cuisine in notes).
-- Return ONLY the JSON object matching the schema with a "recipes" array containing 2 to 3 distinct recipe objects. No prose, no markdown fences.
-- For each recipe object:
+- Return ONLY the JSON object matching the schema with a "recipes" array containing exactly 1 recipe object. No prose, no markdown fences.
+- For the recipe object:
   - Provide a distinct Indian dish title (e.g. "Aloo Matar Sabzi", "Masala Egg Bhurji") and a brief description explaining its flavor profile and fridge ingredients used.
   - ingredients: 3-12 items with realistic amounts and units (e.g. "cup", "tbsp", "g", "clove", "tsp"). Basic Indian pantry staples (oil/ghee, salt, turmeric, chili, cumin/mustard seeds, water) are assumed. Include 1-3 reasonable "swaps".
-  - steps: 3-10 steps with explicit cooking durations (e.g. "Sauté onions for 5 minutes", "Simmer curry for 10 minutes") for step timers.
-  - tips: 0-3 short optional tips (e.g. serving with roti/rice, tempering tips).
+  - steps: 3-8 steps with explicit cooking durations (e.g. "Sauté onions for 5 minutes", "Simmer curry for 10 minutes") for step timers.
+  - tips: 0-2 short optional tips (e.g. serving with roti/rice, tempering tips).
   - servings: sensible integer quantity.
-  - nutrition: realistic per-serving estimates for calories, proteinGrams, carbsGrams, and fatGrams.`;
+  - nutrition: realistic per-serving estimates for calories, proteinGrams, carbsGrams, and fatGrams.
+- Each time you are called, pick a DIFFERENT dish style randomly. Vary between sabzis, curries, pulao, parathas, bhurji, tawa dishes, etc.`;
 
 async function callGeminiWithRetry(userPrompt) {
   let lastReason = "Unknown error.";
@@ -52,6 +43,7 @@ async function callGeminiWithRetry(userPrompt) {
           ? userPrompt
           : `${userPrompt}\n\n(Your previous response was invalid: ${lastReason} Return strictly valid JSON matching the schema this time — no markdown fences, no trailing commas, no missing required fields.)`;
 
+      console.log(`[Attempt ${attempt}] Calling Gemini model: ${GEMINI_MODEL}`);
       const geminiRes = await fetch(
         `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`,
         {

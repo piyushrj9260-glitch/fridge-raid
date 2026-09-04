@@ -7,9 +7,7 @@ import { formatAmount, scaleAmount } from "../scaleUtils.js";
 
 export default function RecipeCard({
   recipe,
-  recipes,
-  activeOptionIndex,
-  onSelectOptionIndex,
+  onTryDifferent,
   displayServings,
   onServingsChange,
   onSwapIngredient,
@@ -50,22 +48,17 @@ export default function RecipeCard({
 
   return (
     <div className="recipe-card">
-      {/* Option selector if multiple recipe choices are available for the ingredients */}
-      {recipes && recipes.length > 1 && (
+      {/* Try different recipe button */}
+      {onTryDifferent && (
         <div className="recipe-options-tabs">
-          <span className="options-label">Dishes recommended for your ingredients:</span>
-          <div className="tabs-row">
-            {recipes.map((r, idx) => (
-              <button
-                key={idx}
-                type="button"
-                className={`option-tab ${idx === activeOptionIndex ? "active" : ""}`}
-                onClick={() => onSelectOptionIndex(idx)}
-              >
-                Option {idx + 1}: {r.title}
-              </button>
-            ))}
-          </div>
+          <button
+            type="button"
+            className="option-tab try-different-btn"
+            onClick={onTryDifferent}
+            disabled={isRefining}
+          >
+            🔄 Try Different Recipe
+          </button>
         </div>
       )}
 

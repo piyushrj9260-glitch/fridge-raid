@@ -77,3 +77,34 @@ npm run dev         # runs on http://localhost:5173, proxies /api to :3001
 standard `npm install && npm run dev` (Vite's equivalent of `npm start`) —
 noted here since the assignment brief mentions `npm start` specifically and
 this repo has two `package.json`s.
+
+## 🎥 Screen Recording
+
+A short demo showing the app in action (ingredient entry → dish options → serving scaling → cook mode → refinement):
+
+**[▶️ Watch the Demo (Google Drive)](https://drive.google.com/file/d/16qj3sMJB6kRHWPZh9mOVcLkQeGwqBbjZ/view?usp=sharing)**
+
+## AI-Usage Note
+
+This project was built with assistance from **Google Gemini (Antigravity / AI coding agent)**. AI was used for:
+
+- **Code generation & iteration** — scaffolding React components, Express endpoints, and CSS from detailed prompts, then iterating on the output.
+- **Schema design** — crafting the JSON response schema that constrains Gemini's recipe output.
+- **Debugging & refactoring** — diagnosing race conditions, improving error handling, and restructuring components.
+- **README drafting** — assembling and formatting this documentation.
+
+All AI-generated code was reviewed, tested, and manually adjusted. The architectural decisions (structured JSON over chat, multi-recipe options, cook mode with wake lock + TTS) were human-directed.
+
+## Limitations
+
+- **Single model dependency** — relies entirely on Gemini 2.0 Flash; no fallback model or offline mode.
+- **No persistent backend storage** — recipe history lives in `localStorage` only; clearing browser data loses everything.
+- **No user authentication** — no accounts, no cross-device sync.
+- **Timer parsing is regex-based** — handles common patterns ("simmer 8 minutes", "bake for 25 min") but can miss unusual phrasings.
+- **Serving scaler is proportional** — it does linear scaling, which works for most recipes but doesn't account for non-linear adjustments (e.g., spice levels don't always scale linearly).
+- **No image generation** — recipes are text-only; no AI-generated food images.
+- **English only** — the UI and model prompts are in English; Indian recipe names appear transliterated.
+
+## Time Spent
+
+~**12–15 hours** across ideation, implementation, styling, testing, and documentation.
